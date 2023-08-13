@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteBase /
+
+# Redirect requests to /public if accessed directly
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ /public/$1 [L]
+
+# Redirect index.php URLs to /
+RewriteCond %{THE_REQUEST} /public/index\.php [NC]
+RewriteRule ^(.*)index\.php$ /public/$1 [L,R=301,NC]
+
+# Rewrite URLs to index.php for the Laravel application
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /public/index.php/$1 [L]
